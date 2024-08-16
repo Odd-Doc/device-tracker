@@ -8,7 +8,6 @@ export default function App() {
       <Link href="/about">About</Link>
       {/* ...other links */}
       <Link href="/facility/Facilities">View facilities</Link>
-      <Link href={"/Details"}>View Details</Link>
     </SafeAreaView>
   );
 }
