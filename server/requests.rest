@@ -1,0 +1,18 @@
+GET http://localhost:3001/todos
+
+###
+
+POST http://localhost:3001/todo/new
+Content-Type: application/json
+
+{
+    "text": "Get binky"
+}
+
+###
+
+DELETE http://localhost:3001/todo/delete/
+
+###
+
+GET http://localhost:3001/todo/complete/66994e5c6c666639b5eac8e5

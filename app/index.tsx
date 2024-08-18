@@ -1,14 +1,46 @@
-import { SafeAreaView } from "react-native";
+import { Pressable, SafeAreaView, StyleSheet, View } from "react-native";
 import { Link } from "expo-router";
-import Devices from "./Devices";
 
 export default function App() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Link href="/about">About</Link>
+    <SafeAreaView style={styles.container}>
       {/* ...other links */}
-      <Link href="/facility/Facilities">View facilities</Link>
-      <Link href={"/Details"}>View Details</Link>
+      <View style={styles.buttonWrapper}>
+        <Pressable style={styles.button}>
+          <Link style={styles.pressableLink} href="/about">
+            About
+          </Link>
+        </Pressable>
+        <Pressable style={styles.button}>
+          <Link style={styles.pressableLink} href="/facility/Facilities">
+            View facilities
+          </Link>
+        </Pressable>
+        <Pressable style={styles.button}>
+          <Link style={styles.pressableLink} href={"/Details"}>
+            View Details
+          </Link>
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  buttonWrapper: {
+    flex: 1,
+    alignItems: "center",
+  },
+  button: {
+    backgroundColor: "#b852fd",
+    padding: 10,
+    borderRadius: 8,
+    margin: 10,
+  },
+  pressableLink: {
+    color: "#ffff",
+  },
+});
