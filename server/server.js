@@ -13,6 +13,18 @@ app.use(cors());
 mongoose.connect(uri);
 
 app.get("/facilities", async (req, res) => {
+  // const allFacilities = await Facility.find()
+  //   .select({ name: 1, street: 1, city: 1, state: 1, zip: 1 })
+  //   .lean();
+  // res.json(allFacilities);
+});
+app.get("/facilities/search/:address", async (req, res) => {
+  const found = await Facility.find()
+    .select({ name: 1, street: 1, city: 1, state: 1, zip: 1 })
+    .lean();
+  res.json(allFacilities);
+});
+app.get("/facilities", async (req, res) => {
   const allFacilities = await Facility.find()
     .select({ name: 1, street: 1, city: 1, state: 1, zip: 1 })
     .lean();
