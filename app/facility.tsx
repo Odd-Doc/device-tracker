@@ -1,12 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-
-const Facility = () => {
-  return (
-    <View>
-      <Text>Facility Page</Text>
-    </View>
-  );
+type FacilityProps = { name: string };
+const Facility = ({ name }: FacilityProps) => {
+  return <View>{name}</View>;
 };
 
 export default Facility;

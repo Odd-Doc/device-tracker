@@ -14,27 +14,10 @@ app.use(cors());
 mongoose.connect(uri);
 
 app.get("/facilities", async (req, res) => {
-  const facilities = await ToDo.find().lean();
-  res.json(facilities);
+  console.log("server says: facilities loaded");
 });
-
-app.post("/todo/new", async (req, res) => {
-  const todo = new ToDo({
-    text: req.body.text,
-  });
-  todo.save();
-  res.json(todo);
-});
-app.delete("/todo/delete/:id", async (req, res) => {
-  const result = await ToDo.findByIdAndDelete(req.params.id);
-  res.json(result);
-});
-
-app.get("/todo/complete/:id", async (req, res) => {
-  const todo = await ToDo.findById(req.params.id);
-  todo.complete = !todo.complete;
-  todo.save();
-  res.json(todo);
+app.post("/facility/new", (req, res) => {
+  console.log("new facility added");
 });
 
 app.listen(3001, () => {
