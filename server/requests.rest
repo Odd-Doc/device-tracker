@@ -1,4 +1,4 @@
-GET http://localhost:3001/todos
+GET http://localhost:3001/facilities
 
 ###
 
@@ -6,9 +6,12 @@ POST http://localhost:3001/facility/new
 Content-Type: application/json
 
 {
-    "text": "Get binky"
+    "name":"Walter's Mart",
+    "street": "3232 Some St.",
+    "city": "Some city",
+    "state": "Some state",
+    "zip": 75050
 }
-
 ###
 
 DELETE http://localhost:3001/todo/delete/

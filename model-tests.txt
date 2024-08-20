@@ -1,0 +1,32 @@
+--------------------------------------------------------
+Facility=>
+--------------------------------------------------------
+{
+  "name": "Avalon",
+    "address": {
+      "street": "2388 North Hwy 360",
+      "city": "Grand Prairie",
+      "state": "TX",
+      "zip": 75050
+    },
+    "devices": [
+      {
+        "manufacturer": "Wilkins",
+        "model": "350",
+        "size": 0.75,
+        "type": "dc",
+        "serialNumber": "181723",
+        }
+    ]
+}
+--------------------------------------------------------
+
+# {
+#     "name":"2388 North Hwy 360",
+#   "address": {
+#     "street": "3232 Some St.",
+#     "city": "Some city",
+#     "state": "Some state",
+#     "zip": 75050
+#   }
+# }
