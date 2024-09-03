@@ -12,17 +12,15 @@ export default function App() {
 
       <View style={styles.buttonWrapper}>
         <Pressable style={styles.button}>
-          <Link style={styles.pressableLink} href="/about">
-            About
-          </Link>
-        </Pressable>
-        <Pressable style={styles.button}>
-          <Link style={styles.pressableLink} href="/facilities">
+          <Link style={styles.pressableLink} href="/screens/facilities">
             View facilities
           </Link>
         </Pressable>
         <Pressable style={styles.button}>
-          <Link style={styles.pressableLink} href={"/details"}>
+          <Link
+            style={styles.pressableLink}
+            href={{ pathname: "/screens/details", params: { name: "Details" } }}
+          >
             View Details
           </Link>
         </Pressable>
