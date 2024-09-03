@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, FlatList } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Link, Stack } from "expo-router";
-import Facility from "../facility";
+import Facility from "../components/facility";
 const API_BASE = "http://localhost:3001";
 
 const Facilities = () => {
