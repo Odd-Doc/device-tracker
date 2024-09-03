@@ -1,14 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-
-const settings = () => {
-  return (
-    <View>
-      <Text>settings</Text>
-    </View>
-  );
+import Search from "../screens/search";
+const testTab = () => {
+  return <Search />;
 };
 
-export default settings;
+export default testTab;
 
 const styles = StyleSheet.create({});

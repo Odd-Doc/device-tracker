@@ -1,17 +1,13 @@
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { View, Text, StyleSheet } from "react-native";
 
-export default function Details() {
+export default function Search() {
   const router = useRouter();
   const params = useLocalSearchParams<any>();
 
   return (
     <View style={styles.container}>
-      <Stack.Screen
-        options={{
-          title: params.name,
-        }}
-      />
+      <Stack.Screen />
       <Text
         onPress={() => {
           router.setParams({ name: "Updated" });
