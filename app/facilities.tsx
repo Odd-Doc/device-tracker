@@ -26,23 +26,25 @@ const Facilities = () => {
   //     .catch((err) => console.error("Error: ", err));
   // };
   //-------------------------------------------------------------------------------------
+  // render and hydrate flat list with ALL facilities
+  //-------------------------------------------------------------------------------------
+  // <View>
+  //   {facilities && (
+  //     <FlatList
+  //       data={facilities}
+  //       renderItem={({ item }) => (
+  //         <Facility name={item.name} street={item.street} />
+  //       )}
+  //     />
+  //   )}
+  // </View>;
+  //-------------------------------------------------------------------------------------
   //-------------------------------------------------------------------------------------
 
   return (
     <View>
       <Stack.Screen options={{ title: "Facilities Page" }} />
       <Text>Facilities Page</Text>
-
-      <View>
-        {facilities && (
-          <FlatList
-            data={facilities}
-            renderItem={({ item }) => (
-              <Facility name={item.name} street={item.street} />
-            )}
-          />
-        )}
-      </View>
     </View>
   );
 };
