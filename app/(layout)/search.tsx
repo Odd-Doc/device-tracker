@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Search from "../screens/search";
-const testTab = () => {
+const SearchTab = () => {
   return <Search />;
 };
 
-export default testTab;
+export default SearchTab;
 
 const styles = StyleSheet.create({});
