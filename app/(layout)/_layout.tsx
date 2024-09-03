@@ -17,12 +17,12 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="search"
         options={{
-          title: "Settings",
+          title: "Search",
           tabBarIcon: ({ color }) => (
             <View>
-              <Ionicons name="cog" size={32} color="#2d82e9" />
+              <Ionicons name="search" size={32} color="#2d82e9" />
             </View>
           ),
         }}
