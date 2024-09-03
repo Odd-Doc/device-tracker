@@ -3,5 +3,9 @@ import { Stack } from "expo-router/stack";
 import { Drawer } from "expo-router/drawer";
 
 export default function Layout() {
-  return <Tabs></Tabs>;
+  return (
+    <Stack>
+      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+    </Stack>
+  );
 }
