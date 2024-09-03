@@ -6,21 +6,28 @@ const API_BASE = "http://localhost:3001";
 
 const Facilities = () => {
   const [facilities, setFacilities] = useState();
-  useEffect(() => {
-    const abortController = new AbortController();
-    GetFacilities();
 
-    return () => {
-      abortController.abort();
-    };
-  }, []);
+  //-------------------------------------------------------------------------------------
+  // Gets ALL facilities -> this is doesnt serve any real purpose beyond testing my connection to database.
+  //-------------------------------------------------------------------------------------
+  // useEffect(() => {
+  //   const abortController = new AbortController();
+  //   GetFacilities();
 
-  const GetFacilities = () => {
-    fetch(API_BASE + "/facilities")
-      .then((res) => res.json())
-      .then((data) => setFacilities(data))
-      .catch((err) => console.error("Error: ", err));
-  };
+  //   return () => {
+  //     abortController.abort();
+  //   };
+  // }, []);
+
+  // const GetFacilities = () => {
+  //   fetch(API_BASE + "/facilities")
+  //     .then((res) => res.json())
+  //     .then((data) => setFacilities(data))
+  //     .catch((err) => console.error("Error: ", err));
+  // };
+  //-------------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------------
+
   return (
     <View>
       <Stack.Screen options={{ title: "Facilities Page" }} />
