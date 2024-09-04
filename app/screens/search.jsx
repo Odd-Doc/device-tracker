@@ -21,15 +21,14 @@ export default function Search() {
   const options = {
     includeScore: true,
     // Search in `author` and in `tags` array
-    keys: ["street"],
+    keys: ["street", "name"],
   };
   const GetFacilities = () => {
     fetch(API_BASE + "/facilities/search")
       .then((res) => res.json())
       .then((foundData) => {
-        const fuse = new Fuse(foundData, options);
+        var fuse = new Fuse(foundData, options);
         const result = fuse.search(searchText);
-        console.log(result);
         setSearchResults(result);
       })
       .catch((err) => console.error("Error: ", err));
@@ -38,12 +37,7 @@ export default function Search() {
   };
   const handleChangeText = (text) => {
     setSearchText(text);
-    if (text != "") {
-      // setSearchResults(result);
-      GetFacilities();
-    } else {
-      setSearchResults([]);
-    }
+    GetFacilities();
   };
 
   return (
@@ -53,10 +47,16 @@ export default function Search() {
         value={searchText}
         onChangeText={(text) => handleChangeText(text)}
       />
-      {searchResults && (
+      {/* check if search text is empty, if so, do not render Flatlist */}
+      {searchResults && searchText != "" && (
         <FlatList
           data={searchResults}
-          renderItem={({ item }) => <Text>{item.item.street}</Text>}
+          renderItem={({ item }) => (
+            <Text>
+              {item.item.street}
+              {item.item.name}
+            </Text>
+          )}
         />
       )}
     </SafeAreaView>
