@@ -11,6 +11,7 @@ import {
 import Fuse from "fuse.js";
 import list from "../list.json";
 import { useState } from "react";
+const API_BASE = "http://localhost:3001";
 
 export default function Search() {
   const [searchText, setSearchText] = useState("");
@@ -20,19 +21,30 @@ export default function Search() {
   const options = {
     includeScore: true,
     // Search in `author` and in `tags` array
-    keys: ["author.lastName"],
+    keys: ["street"],
+  };
+  const GetFacilities = () => {
+    fetch(API_BASE + "/facilities/search")
+      .then((res) => res.json())
+      .then((foundData) => {
+        const fuse = new Fuse(foundData, options);
+        const result = fuse.search(searchText);
+        console.log(result);
+        setSearchResults(result);
+      })
+      .catch((err) => console.error("Error: ", err));
+
+    // .then((data) => setSearchResults(data))
   };
   const handleChangeText = (text) => {
     setSearchText(text);
     if (text != "") {
-      setSearchResults(result);
+      // setSearchResults(result);
+      GetFacilities();
     } else {
       setSearchResults([]);
     }
   };
-
-  const fuse = new Fuse(list, options);
-  const result = fuse.search(searchText);
 
   return (
     <SafeAreaView>
@@ -44,7 +56,7 @@ export default function Search() {
       {searchResults && (
         <FlatList
           data={searchResults}
-          renderItem={({ item }) => <Text>{item.item.author.lastName}</Text>}
+          renderItem={({ item }) => <Text>{item.item.street}</Text>}
         />
       )}
     </SafeAreaView>
