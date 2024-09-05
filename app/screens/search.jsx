@@ -7,9 +7,9 @@ import {
   SafeAreaView,
   Button,
   FlatList,
+  Pressable,
 } from "react-native";
 import Fuse from "fuse.js";
-import list from "../list.json";
 import { useState } from "react";
 const API_BASE = "http://localhost:3001";
 
@@ -52,10 +52,12 @@ export default function Search() {
         <FlatList
           data={searchResults}
           renderItem={({ item }) => (
-            <Text>
-              {item.item.street}
-              {item.item.name}
-            </Text>
+            <Pressable>
+              <Text>
+                {item.item.street}
+                {item.item.name}
+              </Text>
+            </Pressable>
           )}
         />
       )}
