@@ -53,12 +53,12 @@ export default function Search() {
         <FlatList
           data={searchResults}
           renderItem={({ item }) => (
-            <Text>
-              <LinkPressable>
+            <LinkPressable onPressUp={() => console.log("here")}>
+              <Text>
                 {item.item.street}
                 {item.item.name}
-              </LinkPressable>
-            </Text>
+              </Text>
+            </LinkPressable>
           )}
         />
       )}
