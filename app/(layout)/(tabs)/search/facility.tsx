@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { RouteParams, Router } from "expo-router";
+import { RouteParams, Router, Stack, useLocalSearchParams } from "expo-router";
 interface FacilityProps {
   facilityName: String;
   facilityStreet: String;
@@ -17,15 +17,23 @@ interface FacilityProps {
 // };
 
 function Facility({ facilityName, facilityStreet }: FacilityProps) {
-  const [name, setName] = useState<String>("");
-  useEffect(() => {
-    setName(facilityName);
-  });
+  // const [name, setName] = useState<String>("");
+  const params = useLocalSearchParams();
+  const { name } = params;
+  // useEffect(() => {
+  //   setName(facilityName);
+  // });
   return (
-    <View>
-      <Text style={styles.bg}>{name}</Text>
-      {/* <Text>{facilityStreet}</Text> */}
-    </View>
+    <>
+      <Stack.Screen
+        options={{ headerShown: true }}
+        // initialParams={{ name, setName }}
+      />
+      <View>
+        <Text style={styles.bg}>{name}</Text>
+        {/* <Text>{facilityStreet}</Text> */}
+      </View>
+    </>
   );
 }
 const styles = StyleSheet.create({
