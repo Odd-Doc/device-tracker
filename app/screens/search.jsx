@@ -1,4 +1,4 @@
-import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
 import {
   View,
   Text,
@@ -53,12 +53,12 @@ export default function Search() {
         <FlatList
           data={searchResults}
           renderItem={({ item }) => (
-            <LinkPressable onPressUp={() => console.log("here")}>
+            <Link href="/search/facility">
               <Text>
                 {item.item.street}
                 {item.item.name}
               </Text>
-            </LinkPressable>
+            </Link>
           )}
         />
       )}

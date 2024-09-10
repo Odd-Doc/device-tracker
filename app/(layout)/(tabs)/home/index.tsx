@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-
-const index = () => {
+import Search from "../../../screens/search";
+const HomeIndex = () => {
   return (
     <View>
-      <Text>index</Text>
+      <Text>Home</Text>
     </View>
   );
 };
 
-export default index;
+export default HomeIndex;
 
 const styles = StyleSheet.create({});

@@ -1,3 +1,4 @@
+import { Link } from "expo-router";
 import React from "react";
 import { Pressable } from "react-native";
 
@@ -12,7 +13,11 @@ const LinkPressable = ({
   href,
   children,
 }: PropTypes): React.JSX.Element => {
-  return <Pressable onPress={() => onPressUp()}>{children}</Pressable>;
+  return (
+    <Link href={href}>
+      <Pressable onPress={() => onPressUp()}>{children}</Pressable>
+    </Link>
+  );
 };
 
 export default LinkPressable;
