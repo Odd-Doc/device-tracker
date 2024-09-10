@@ -6,12 +6,13 @@ import * as Location from "expo-location";
 import Map from "../../../components/map";
 
 const HomeIndex = () => {
-  const [location, setLocation] = useState<any>();
+  const [location, setLocation] = useState<any>({
+    latitude: 32.7544,
+    longitude: -97.01,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
   const [errorMsg, setErrorMsg] = useState("");
-
-  useEffect(() => {
-    // handleFindMe();
-  }, [location]);
 
   const handleFindMe = () => {
     (async () => {
@@ -22,17 +23,11 @@ const HomeIndex = () => {
       }
 
       let location = await Location.getCurrentPositionAsync({});
-      let text = "Waiting..";
-      if (errorMsg) {
-        text = errorMsg;
-      } else if (location) {
-        // text = JSON.stringify(location);
-        console.log(location);
-        setLocation(location);
-      }
+      setLocation(location);
     })();
+    console.log(location);
   };
-  // console.log(text);
+  console.log(location);
   return (
     <>
       <Stack.Screen
@@ -42,8 +37,8 @@ const HomeIndex = () => {
       />
 
       <View style={styles.container}>
-        <Map loc={JSON.stringify(location)} />
-        <Button title="Find Me" onPress={handleFindMe} />
+        <Map loc={location} />
+        <Button title="Find Me" onPress={() => handleFindMe()} />
       </View>
     </>
   );
