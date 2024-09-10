@@ -24,9 +24,7 @@ app.get("/facilities", async (req, res) => {
   res.json(allFacilities);
 });
 app.get("/facilities/search", async (req, res) => {
-  const found = await Facility.find()
-    .select({ name: 1, street: 1, city: 1, state: 1, zip: 1 })
-    .lean();
+  const found = await Facility.find().select({ name: 1, street: 1 }).lean();
   res.json(found);
 });
 // app.get("/facilities/search/:query", async (req, res) => {

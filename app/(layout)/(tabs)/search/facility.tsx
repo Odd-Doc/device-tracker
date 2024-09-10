@@ -17,29 +17,22 @@ interface FacilityProps {
 // };
 
 function Facility({ facilityName, facilityStreet }: FacilityProps) {
-  // const [name, setName] = useState<String>("");
+  const [companyName, setCompanyName] = useState<string>("");
   const params = useLocalSearchParams();
-  const { name } = params;
-  // useEffect(() => {
-  //   setName(facilityName);
-  // });
+  const { name, street } = params;
+
   return (
     <>
-      <Stack.Screen
-        options={{ headerShown: true }}
-        // initialParams={{ name, setName }}
-      />
+      <Stack.Screen options={{ headerShown: true, title: "Facility" }} />
       <View>
-        <Text style={styles.bg}>{name}</Text>
-        {/* <Text>{facilityStreet}</Text> */}
+        <Text>{name}</Text>
+        <Text>{street}</Text>
       </View>
     </>
   );
 }
 const styles = StyleSheet.create({
-  bg: {
-    backgroundColor: "red",
-  },
+  bg: {},
 });
 
 export default Facility;

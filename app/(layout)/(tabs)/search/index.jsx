@@ -17,10 +17,9 @@ const API_BASE = "http://localhost:3001";
 export default function Search() {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const router = useRouter();
-  const params = useLocalSearchParams();
+
   const options = {
-    includeScore: true,
+    threshhold: 0.3,
     // Search in `author` and in `tags` array
     keys: ["street", "name"],
   };
@@ -42,29 +41,35 @@ export default function Search() {
   };
 
   return (
-    <SafeAreaView>
-      <TextInput
-        style={styles.input}
-        value={searchText}
-        onChangeText={(text) => handleChangeText(text)}
-      />
-      {/* check if search text is empty, if so, do not render Flatlist */}
-      {searchResults && searchText != "" && (
-        <FlatList
-          data={searchResults}
-          renderItem={({ item }) => (
-            <Link
-              href={{ pathname: "/search/facility", params: { name: "oopp" } }}
-            >
-              <Text>
-                {item.item.street}
-                {item.item.name}
-              </Text>
-            </Link>
-          )}
+    <>
+      <Stack.Screen options={{ headerShown: true, title: "Search" }} />
+      <SafeAreaView>
+        <TextInput
+          style={styles.input}
+          value={searchText}
+          onChangeText={(text) => handleChangeText(text)}
         />
-      )}
-    </SafeAreaView>
+        {/* check if search text is empty, if so, do not render Flatlist */}
+        {searchResults && searchText != "" && (
+          <FlatList
+            data={searchResults}
+            renderItem={({ item }) => (
+              <Link
+                href={{
+                  pathname: "/search/facility",
+                  params: { name: item.item.name, street: item.item.street },
+                }}
+              >
+                <Text>
+                  {item.item.street}
+                  {item.item.name}
+                </Text>
+              </Link>
+            )}
+          />
+        )}
+      </SafeAreaView>
+    </>
   );
 }
 
