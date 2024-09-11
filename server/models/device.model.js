@@ -9,6 +9,8 @@ const deviceSchema = new Schema({
   size: { type: Number, required: true },
   type: { type: String, required: true },
   serialNumber: { type: String, required: true },
+  location: { type: String, required: true },
+  mapGeo: { type: JSON },
 });
 
 export const Device = mongoose.model("facility-device", deviceSchema);

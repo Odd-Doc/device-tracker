@@ -1,23 +1,23 @@
 import { Link } from "expo-router";
-import React from "react";
-import { Pressable } from "react-native";
+import React, { Children } from "react";
+import { Pressable, StyleSheet, View } from "react-native";
 
 interface PropTypes {
-  children: React.JSX.Element;
-  onPressUp: Function;
   href: string;
+  children: React.JSX.Element;
 }
 
-const LinkPressable = ({
-  onPressUp,
-  href,
-  children,
-}: PropTypes): React.JSX.Element => {
+const LinkPressable = ({ href, children }: PropTypes): React.JSX.Element => {
   return (
-    <Link href={href}>
-      <Pressable onPress={() => onPressUp()}>{children}</Pressable>
-    </Link>
+    <View style={styles.link}>
+      <Link href={href}>{children}</Link>
+    </View>
   );
 };
+const styles = StyleSheet.create({
+  link: {
+    alignSelf: "center",
+  },
+});
 
 export default LinkPressable;
