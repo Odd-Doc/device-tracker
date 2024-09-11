@@ -7,11 +7,11 @@ import {
   View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import Search from "../../../screens/search";
-import { Stack } from "expo-router";
-import MapIndex from "./map";
+
+import { Stack, useRouter } from "expo-router";
 
 const HomeIndex = () => {
+  const router = useRouter();
   return (
     <>
       <Stack.Screen
@@ -23,9 +23,28 @@ const HomeIndex = () => {
       <View style={styles.container}>
         <ScrollView>
           {/* <MapIndex /> */}
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Map</Text>
-          </TouchableOpacity>
+          <View style={styles.linkContainer}>
+            <TouchableOpacity
+              onPress={() => router.push("/home/map")}
+              style={styles.button}
+            >
+              <Text style={styles.buttonText}>Map</Text>
+            </TouchableOpacity>
+          </View>
+          {/* <View style={styles.linkContainer}>
+            <Link href="/map" style={styles.linkContainer}>
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Something Else</Text>
+              </TouchableOpacity>
+            </Link>
+          </View>
+          <View style={styles.linkContainer}>
+            <Link href="/map" style={styles.linkContainer}>
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Other Stuff</Text>
+              </TouchableOpacity>
+            </Link>
+          </View> */}
         </ScrollView>
       </View>
     </>
@@ -41,22 +60,21 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: "#137bf2",
-    alignSelf: "center",
-    width: "50%",
     borderRadius: 12,
-    marginTop: 10,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
     paddingLeft: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
+    paddingTop: 30,
+    paddingBottom: 30,
     paddingRight: 10,
+    width: 200,
   },
   buttonText: {
     textAlign: "center",
     color: "white",
-    fontSize: 15,
+    fontSize: 20,
     fontWeight: "700",
+  },
+  linkContainer: {
+    marginTop: 20,
+    alignSelf: "center",
   },
 });
