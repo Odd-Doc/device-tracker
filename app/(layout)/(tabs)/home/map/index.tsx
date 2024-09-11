@@ -41,7 +41,8 @@ export default MapIndex;
 
 const styles = StyleSheet.create({
   mapContainer: {
-    height: "50%",
+    height: 500,
+    padding: 10,
   },
   button: {
     backgroundColor: "green",
