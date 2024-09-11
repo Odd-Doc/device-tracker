@@ -6,12 +6,7 @@ import * as Location from "expo-location";
 import Map from "../../../components/map";
 
 const HomeIndex = () => {
-  const [location, setLocation] = useState<any>({
-    latitude: 32.7544,
-    longitude: -97.01,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
-  });
+  const [location, setLocation] = useState<any>({});
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleFindMe = () => {
@@ -22,12 +17,19 @@ const HomeIndex = () => {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
+      let location = await Location.getCurrentPositionAsync({
+        accuracy: Location.Accuracy.Highest,
+      });
+      setLocation({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+        latitudeDelta: 0.0922,
+        longitudeDelta: 0.0421,
+      });
     })();
-    console.log(location);
+    // console.log(location);
   };
-  console.log(location);
+
   return (
     <>
       <Stack.Screen
