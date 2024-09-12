@@ -1,7 +1,7 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 import "dotenv/config.js";
 import express from "express";
-import mongoose from "mongoose";
+import mongoose, { set } from "mongoose";
 import cors from "cors";
 import { Facility } from "./models/facility.model.js";
 import { Device } from "./models/device.model.js";
@@ -14,6 +14,9 @@ app.use(cors());
 
 mongoose.connect(uri);
 
+//////////////////////////////////////////
+/// FACILITY----------------------------
+//////////////////////////////////////////
 app.get("/facilities", async (req, res) => {
   const allFacilities = await Facility.find().select({
     name: 1,
@@ -29,12 +32,11 @@ app.get("/facilities/search", async (req, res) => {
   const found = await Facility.find().select({ name: 1, street: 1 }).lean();
   res.json(found);
 });
-// app.get("/facilities/search/:query", async (req, res) => {
-//   const found = await Facility.find()
-//     .select({ name: 1, street: 1, city: 1, state: 1, zip: 1 })
-//     .lean();
-//   res.json(allFacilities);
-// });
+app.get("/facility/:id", async (req, res) => {
+  var id = req.params.id;
+  const found = await Facility.findById(id).lean();
+  res.json(found);
+});
 app.get("/facilities", async (req, res) => {
   const allFacilities = await Facility.find()
     .select({ name: 1, street: 1, city: 1, state: 1, zip: 1 })
@@ -48,10 +50,47 @@ app.post("/facility/new", (req, res) => {
     city: req.body.city,
     state: req.body.state,
     zip: req.body.zip,
+    locationId: req.body.locationId,
   });
   newFacility.save();
   res.json(newFacility);
 });
+app.put("/facility/update/:facilityId/:deviceId", async (req, res) => {
+  var facilityId = req.params.facilityId;
+  var deviceId = req.params.deviceId;
+  const device = await Device.findById(deviceId);
+
+  const facility = await Facility.findOneAndUpdate(
+    { _id: facilityId },
+    { $push: { devices: device } }
+  ).then((data) => res.json(data));
+});
+app.delete("/facility/delete/:id", async (req, res) => {
+  var id = req.params.id;
+  // const found = await Device.findById(id).lean();
+  const found = await Facility.deleteOne({ _id: id });
+  res.json(found);
+});
+// app.post("/facility/device/add", (req, res) => {
+//   const newDevice = new Device({
+//     manufacturer: req.body.manufacturer,
+//     model: req.body.model,
+//     size: req.body.size,
+//     type: req.body.type,
+//     serialNumber: req.body.serialNumber,
+//     locationDescription: req.body.locationDescription,
+//     location: req.body.location,
+//   });
+//   newDevice.save();
+
+//   res.json(newDevice);
+// });
+//////////////////////////////////////////
+/// END FACILITY----------------------------
+//////////////////////////////////////////
+//////////////////////////////////////////
+/// DEVICE----------------------------
+//////////////////////////////////////////
 app.post("/device/new", (req, res) => {
   const newDevice = new Device({
     manufacturer: req.body.manufacturer,
@@ -60,13 +99,27 @@ app.post("/device/new", (req, res) => {
     type: req.body.type,
     serialNumber: req.body.serialNumber,
     locationDescription: req.body.locationDescription,
-    mapGeo: req.body.mapGeo,
+    location: req.body.location,
   });
   newDevice.save();
-  console.log(newDevice);
+
   res.json(newDevice);
 });
+app.get("/device/:id", async (req, res) => {
+  var id = req.params.id;
+  const found = await Device.findById(id).lean();
+  res.json(found);
+});
 
+app.delete("/device/delete/:id", async (req, res) => {
+  var id = req.params.id;
+  // const found = await Device.findById(id).lean();
+  const found = await Device.deleteOne({ _id: id });
+  res.json(found);
+});
+//////////////////////////////////////////
+/// END DEVICE----------------------------
+//////////////////////////////////////////
 app.listen(3001, () => {
   console.log("Server started on port 3001");
 });

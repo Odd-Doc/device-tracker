@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import Fuse from "fuse.js";
 import { useState } from "react";
-
+import axios from "axios";
 // const API_BASE = process.env.NGROK_URI;
 const API_BASE = "http://localhost:3001";
 
@@ -25,22 +25,22 @@ export default function Search() {
     keys: ["street", "name"],
   };
   const GetFacilities = () => {
-    fetch(API_BASE + "/facilities/search")
-      .then((res) => res.json())
+    axios
+      .get(API_BASE + "/facilities/search")
       .then((foundData) => {
-        var fuse = new Fuse(foundData, options);
+        var fuse = new Fuse(foundData.data, options);
         const result = fuse.search(searchText);
         setSearchResults(result);
       })
       .catch((err) => console.error("Error: ", err));
-
-    // .then((data) => setSearchResults(data))
   };
   const handleChangeText = (text) => {
     setSearchText(text);
     GetFacilities();
   };
-
+  const handleFacilitySelect = () => {
+    console.log("here");
+  };
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Search" }} />
@@ -60,6 +60,7 @@ export default function Search() {
                   pathname: "/search/facility",
                   params: { name: item.item.name, street: item.item.street },
                 }}
+                onPressOut={handleFacilitySelect}
               >
                 <Text>
                   {item.item.street}
