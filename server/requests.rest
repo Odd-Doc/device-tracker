@@ -14,6 +14,22 @@ Content-Type: application/json
 }
 ###
 
+POST http://localhost:3001/device/new
+Content-Type: application/json
+
+{  
+     "manufacturer": "Febco",
+    "model": "850",
+    "size": "1",
+    "type": "Double Check",
+    "serialNumber": "longserial#######",
+    "locationDescription": "next to wm",
+    "mapGeo": { "lat": "2323",
+  "long":  "2323232" ,}
+   
+}
+###
+
 DELETE http://localhost:3001/todo/delete/
 
 ###
