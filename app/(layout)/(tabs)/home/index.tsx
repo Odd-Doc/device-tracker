@@ -31,20 +31,6 @@ const HomeIndex = () => {
               <Text style={styles.buttonText}>Map</Text>
             </TouchableOpacity>
           </View>
-          {/* <View style={styles.linkContainer}>
-            <Link href="/map" style={styles.linkContainer}>
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Something Else</Text>
-              </TouchableOpacity>
-            </Link>
-          </View>
-          <View style={styles.linkContainer}>
-            <Link href="/map" style={styles.linkContainer}>
-              <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText}>Other Stuff</Text>
-              </TouchableOpacity>
-            </Link>
-          </View> */}
         </ScrollView>
       </View>
     </>
