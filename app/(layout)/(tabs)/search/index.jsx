@@ -11,8 +11,9 @@ import {
 } from "react-native";
 import Fuse from "fuse.js";
 import { useState } from "react";
-// import LinkPressable from "../components/LinkPressable";
-const API_BASE = "https://f263-71-78-129-209.ngrok-free.app";
+
+// const API_BASE = process.env.NGROK_URI;
+const API_BASE = "http://localhost:3001";
 
 export default function Search() {
   const [searchText, setSearchText] = useState("");
