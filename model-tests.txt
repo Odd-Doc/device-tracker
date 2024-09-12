@@ -21,12 +21,16 @@ Facility=>
 }
 --------------------------------------------------------
 
-# {
-#     "name":"2388 North Hwy 360",
-#   "address": {
-#     "street": "3232 Some St.",
-#     "city": "Some city",
-#     "state": "Some state",
-#     "zip": 75050
-#   }
-# }
+{  
+     "manufacturer": "Febco",
+    "model": "850",
+    "size": "1",
+    "type": "Double Check",
+    "serialNumber": "longserial#######",
+    "locationDescription": "next to wm",
+    "mapGeo": { 
+    "lat": "2323",
+    "long":  "2323232",
+    }
+   
+}
