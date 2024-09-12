@@ -63,6 +63,7 @@ app.post("/device/new", (req, res) => {
     mapGeo: req.body.mapGeo,
   });
   newDevice.save();
+  console.log(newDevice);
   res.json(newDevice);
 });
 
