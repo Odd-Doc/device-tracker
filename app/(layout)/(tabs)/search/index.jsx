@@ -12,8 +12,8 @@ import {
 import Fuse from "fuse.js";
 import { useState } from "react";
 import axios from "axios";
-// const API_BASE = process.env.NGROK_URI;
-const API_BASE = "http://localhost:3001";
+const API_BASE = process.env.NGROK_URI;
+// const API_BASE = "http://localhost:3001";
 
 export default function Search() {
   const [searchText, setSearchText] = useState("");
@@ -38,9 +38,7 @@ export default function Search() {
     setSearchText(text);
     GetFacilities();
   };
-  const handleFacilitySelect = () => {
-    console.log("here");
-  };
+  const handleFacilitySelect = () => {};
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Search" }} />
@@ -58,7 +56,11 @@ export default function Search() {
               <Link
                 href={{
                   pathname: "/search/facility",
-                  params: { name: item.item.name, street: item.item.street },
+                  params: {
+                    name: item.item.name,
+                    street: item.item.street,
+                    devices: item.item.devices,
+                  },
                 }}
                 onPressOut={handleFacilitySelect}
               >

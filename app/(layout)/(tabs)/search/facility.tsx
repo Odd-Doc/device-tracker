@@ -19,14 +19,15 @@ interface FacilityProps {
 function Facility({ facilityName, facilityStreet }: FacilityProps) {
   const [companyName, setCompanyName] = useState<string>("");
   const params = useLocalSearchParams();
-  const { name, street } = params;
-
+  const { name, street, devices } = params;
+  // console.log(devices);
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Facility" }} />
       <View>
         <Text>{name}</Text>
         <Text>{street}</Text>
+        <Text>{devices}</Text>
       </View>
     </>
   );

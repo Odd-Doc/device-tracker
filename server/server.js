@@ -29,7 +29,10 @@ app.get("/facilities", async (req, res) => {
   res.json(allFacilities);
 });
 app.get("/facilities/search", async (req, res) => {
-  const found = await Facility.find().select({ name: 1, street: 1 }).lean();
+  const found = await Facility.find()
+    .select({ name: 1, street: 1, devices: 1 })
+    .lean();
+
   res.json(found);
 });
 app.get("/facility/:id", async (req, res) => {
