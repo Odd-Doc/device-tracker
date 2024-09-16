@@ -67,15 +67,25 @@ const filterOutUniqueSites = () => {
   return filteredCompanies;
 };
 const hydrateDevices = (filteredArray, raw) => {
-  var newArray = [];
-
   console.log("filter complete -> being hydration");
+
   for (let i = 0; i < filteredArray.length; i++) {
     // console.log(filteredArray[i]);
-    for (const facility in filteredArray[i]) {
-      if (facility == "devices") {
-        var deviceArray = filteredArray[i][facility];
-        console.log(deviceArray);
+    for (const filteredKey in filteredArray[i]) {
+      if (filteredKey == "locationid") {
+        // track current filtered facility in loops
+        var filteredId = filteredArray[i][filteredKey];
+        for (let j = 0; j < raw.length; j++) {
+          for (const rawKey in raw[j]) {
+            // track current raw facility in loops
+            var rawId = raw[j][rawKey];
+            if (rawKey == "sites_locationid") {
+              if (filteredId == rawId) {
+                console.log(`adding a device to ${filteredId}`);
+              }
+            }
+          }
+        }
       }
     }
   }
