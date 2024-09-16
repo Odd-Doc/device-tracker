@@ -12,8 +12,9 @@ import {
 import Fuse from "fuse.js";
 import { useState } from "react";
 import axios from "axios";
-const API_BASE = process.env.NGROK_URI;
-// const API_BASE = "http://localhost:3001";
+// const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
+
+const API_BASE = "http://localhost:3001";
 
 export default function Search() {
   const [searchText, setSearchText] = useState("");

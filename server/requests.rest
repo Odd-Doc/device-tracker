@@ -61,7 +61,16 @@ Content-Type: application/json
    
 }
 ###
+### add imported facility
+POST http://localhost:3001/facility/newImport
+Content-Type: application/json
 
+{  
+    "name": "test"
+ 
+   
+}
+###
 ### find device
 GET  http://localhost:3001/device/66e321117c7ef0c725609715
 

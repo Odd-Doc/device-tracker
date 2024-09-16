@@ -5,6 +5,7 @@ import mongoose, { set } from "mongoose";
 import cors from "cors";
 import { Facility } from "./models/facility.model.js";
 import { Device } from "./models/device.model.js";
+import { FacilityImport } from "./models/facilityImport.model.js";
 
 const uri = process.env.DB_URI;
 const app = express();
@@ -54,6 +55,19 @@ app.post("/facility/new", (req, res) => {
     state: req.body.state,
     zip: req.body.zip,
     locationId: req.body.locationId,
+  });
+  newFacility.save();
+  res.json(newFacility);
+});
+app.post("/facility/newImport", (req, res) => {
+  const newFacility = new FacilityImport({
+    name: req.body.name,
+    street: req.body.street,
+    city: req.body.city,
+    state: req.body.state,
+    zip: req.body.zip,
+    locationId: req.body.locationId,
+    devices: req.body.devices,
   });
   newFacility.save();
   res.json(newFacility);

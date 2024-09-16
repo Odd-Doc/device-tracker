@@ -20,8 +20,12 @@ const deviceGeoSchema = new Schema({
   },
 });
 const deviceSchema = new Schema({
+  hazid: { type: Number },
+  hazardcat: { type: String },
+  testdue: { type: Date },
+  lasttest: { type: Date },
   manufacturer: { type: String, required: true },
-  model: { type: String, required: true },
+  _model: { type: String, required: true },
   size: { type: String, required: true },
   type: { type: String, required: true },
   serialNumber: { type: String, required: true },
