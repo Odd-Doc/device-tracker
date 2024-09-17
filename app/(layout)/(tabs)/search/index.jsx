@@ -28,12 +28,14 @@ export default function Search({ router }) {
   const [searchText, setSearchText] = useState("");
   const [searchResults, setSearchResults] = useState();
   const [selectedFacility, setSelectedFacility] = useState();
-  const options = {
-    threshhold: 0.3,
-    // Search in `author` and in `tags` array
-    keys: ["address", "company", "locationid", "devices"],
-  };
-  useEffect(() => {}, [selectedFacility]);
+
+  useEffect(() => {
+    if (!searchText) {
+      setSearchResults([]);
+    }
+
+    GetFacilities();
+  }, [searchText]);
   const GetFacilities = () => {
     axios
       .get(API_BASE + "/facilities")
@@ -45,10 +47,7 @@ export default function Search({ router }) {
       })
       .catch((err) => console.error("Error: ", err));
   };
-  const handleChangeText = (text) => {
-    setSearchText(text);
-    GetFacilities();
-  };
+  const handleChangeText = (text) => {};
   const handleFacilitySelect = (facility) => {
     setSelectedFacility(JSON.stringify(facility));
   };
