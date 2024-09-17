@@ -17,6 +17,10 @@ Content-Type: application/json
 GET  http://localhost:3001/facility/66e9b592fbc96d49253b2c57
 
 ###
+### quesry through facilities
+GET  http://localhost:3001/facility/search?query=064116
+
+###
 ### delete facility
 DELETE  http://localhost:3001/facility/delete/66e9bba8ad53347174de2a6b
 
