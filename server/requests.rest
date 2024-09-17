@@ -1,7 +1,7 @@
 GET http://localhost:3001/facilities
 
-### add facility
 
+### add facility
 POST http://localhost:3001/facility/new
 Content-Type: application/json
 
@@ -14,11 +14,11 @@ Content-Type: application/json
     "locationId":929292
 }
 ### find facility
-GET  http://localhost:3001/facility/66c4e209d0200d27fff68fbf
+GET  http://localhost:3001/facility/66e9b592fbc96d49253b2c57
 
 ###
 ### delete facility
-DELETE  http://localhost:3001/facility/delete/66c4cc335b0609c45cf38be8
+DELETE  http://localhost:3001/facility/delete/66e9bba8ad53347174de2a6b
 
 ###
 

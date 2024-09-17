@@ -1,36 +1,46 @@
-import { Link, Stack, useLocalSearchParams, useRouter } from "expo-router";
+import {
+  Link,
+  router,
+  Stack,
+  useLocalSearchParams,
+  usePathname,
+  useRouter,
+} from "expo-router";
 import {
   View,
   Text,
   StyleSheet,
   TextInput,
   SafeAreaView,
+  TouchableOpacity,
   Button,
   FlatList,
   Pressable,
 } from "react-native";
 import Fuse from "fuse.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 // const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
 const API_BASE = "http://localhost:3001";
 
-export default function Search() {
+export default function Search({ router }) {
   const [searchText, setSearchText] = useState("");
-  const [searchResults, setSearchResults] = useState([]);
-
+  const [searchResults, setSearchResults] = useState();
+  const [selectedFacility, setSelectedFacility] = useState();
   const options = {
     threshhold: 0.3,
     // Search in `author` and in `tags` array
-    keys: ["street", "name"],
+    keys: ["address", "company", "locationid", "devices"],
   };
+  useEffect(() => {}, [selectedFacility]);
   const GetFacilities = () => {
     axios
-      .get(API_BASE + "/facilities/search")
+      .get(API_BASE + "/facilities")
       .then((foundData) => {
         var fuse = new Fuse(foundData.data, options);
         const result = fuse.search(searchText);
+
         setSearchResults(result);
       })
       .catch((err) => console.error("Error: ", err));
@@ -39,7 +49,9 @@ export default function Search() {
     setSearchText(text);
     GetFacilities();
   };
-  const handleFacilitySelect = () => {};
+  const handleFacilitySelect = (facility) => {
+    setSelectedFacility(JSON.stringify(facility));
+  };
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Search" }} />
@@ -55,20 +67,20 @@ export default function Search() {
             data={searchResults}
             renderItem={({ item }) => (
               <Link
+                push
                 href={{
                   pathname: "/search/facility",
                   params: {
-                    name: item.item.name,
-                    street: item.item.street,
-                    devices: item.item.devices,
+                    selection: JSON.stringify(item.item.company),
                   },
                 }}
-                onPressOut={handleFacilitySelect}
               >
-                <Text>
-                  {item.item.street}
-                  {item.item.name}
-                </Text>
+                <TouchableOpacity onPress={() => handleFacilitySelect(item)}>
+                  <Text>
+                    {item.item.address}
+                    {item.item.company}
+                  </Text>
+                </TouchableOpacity>
               </Link>
             )}
           />

@@ -18,37 +18,26 @@ mongoose.connect(uri);
 //////////////////////////////////////////
 /// FACILITY----------------------------
 //////////////////////////////////////////
+
 app.get("/facilities", async (req, res) => {
-  const allFacilities = await Facility.find().select({
-    name: 1,
-    street: 1,
-    city: 1,
-    state: 1,
-    zip: 1,
-  });
-
-  res.json(allFacilities);
-});
-app.get("/facilities/search", async (req, res) => {
-  const found = await Facility.find()
-    .select({ name: 1, street: 1, devices: 1 })
+  const found = await FacilityImport.find()
+    .select({ company: 1, address: 1, devices: 1, locationid: 1 })
     .lean();
-
   res.json(found);
 });
 app.get("/facility/:id", async (req, res) => {
   var id = req.params.id;
-  const found = await Facility.findById(id).lean();
+  const found = await FacilityImport.findById(id).lean();
   res.json(found);
 });
 app.get("/facilities", async (req, res) => {
-  const allFacilities = await Facility.find()
+  const allFacilities = await FacilityImport.find()
     .select({ name: 1, street: 1, city: 1, state: 1, zip: 1 })
     .lean();
   res.json(allFacilities);
 });
 app.post("/facility/new", (req, res) => {
-  const newFacility = new Facility({
+  const newFacility = new FacilityImport({
     name: req.body.name,
     street: req.body.street,
     city: req.body.city,
@@ -80,7 +69,7 @@ app.put("/facility/update/:facilityId/:deviceId", async (req, res) => {
   var deviceId = req.params.deviceId;
   const device = await Device.findById(deviceId);
 
-  const facility = await Facility.findOneAndUpdate(
+  const facility = await FacilityImport.findOneAndUpdate(
     { _id: facilityId },
     { $push: { devices: device } }
   ).then((data) => res.json(data));
@@ -88,7 +77,7 @@ app.put("/facility/update/:facilityId/:deviceId", async (req, res) => {
 app.delete("/facility/delete/:id", async (req, res) => {
   var id = req.params.id;
   // const found = await Device.findById(id).lean();
-  const found = await Facility.deleteOne({ _id: id });
+  const found = await FacilityImport.deleteOne({ _id: id });
   res.json(found);
 });
 // app.post("/facility/device/add", (req, res) => {
