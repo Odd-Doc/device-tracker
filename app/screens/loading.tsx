@@ -6,13 +6,7 @@ import { MotiView, MotiTransitionProp } from "moti";
 const transition: MotiTransitionProp = {
   type: "timing",
 };
-const Loading = ({
-  size,
-  isComplete,
-}: {
-  size: number;
-  isComplete: boolean;
-}) => {
+const Loading = ({ size }: { size: number }) => {
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />

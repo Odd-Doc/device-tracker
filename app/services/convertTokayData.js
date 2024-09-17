@@ -166,39 +166,38 @@ export default convertData = async (data) => {
 
   const hydration = hydrateDevices(await filteredData, data);
   console.log("device hydration complete!");
-  await hydration.then((data) => {
-    data.forEach((element) => {
-      fetch(API_BASE + "/facility/newImport", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          locationid: element.locationid,
-          company: element.company,
-          address: element.address,
-          city: element.city,
-          state: element.state,
-          zip: element.zip,
-          phone: element.phone,
-          testdue: element.testdue,
-          devices: element.devices,
-        }),
-      })
-        .then((res) => {
-          res.json();
-          console.log(
-            `"Import Complete! Number of facities imported: ${data.length}"`
-          );
-        })
-        .catch((err) => console.error("Error: ", err));
-    });
-  });
+  await hydration
+    .then((data) => {
+      data.forEach((element) => {
+        fetch(API_BASE + "/facility/newImport", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            locationid: element.locationid,
+            company: element.company,
+            address: element.address,
+            city: element.city,
+            state: element.state,
+            zip: element.zip,
+            phone: element.phone,
+            testdue: element.testdue,
+            devices: element.devices,
+          }),
+        }).catch((err) => console.error("Error: ", err));
+      });
+    })
+    .then(
+      console.log(
+        `"Import Complete! Number of facities imported: ${data.length}"`
+      )
+    );
 };
 ////////////////////////////////////////
 // Hydrate database----------------------
 ////////////////////////////////////////
-// convertData(jsonData);
+
 ////////////////////////////////////////
 // END Hydrate database------------------
 ////////////////////////////////////////

@@ -1,12 +1,8 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import Loading from "../screens/loadingScreen";
+import Loading from "../screens/loading";
 
 const LoadingScreen = () => {
-  const [loadComplete, setLoadComplete] = useState<boolean>();
-  useEffect(() => {
-    setLoadComplete(false);
-  });
   return (
     <View
       style={{
@@ -16,7 +12,7 @@ const LoadingScreen = () => {
         alignItems: "center",
       }}
     >
-      <Loading isComplete={false} size={100} />
+      <Loading size={100} />
     </View>
   );
 };
