@@ -60,14 +60,17 @@ app.post("/facility/new", (req, res) => {
   res.json(newFacility);
 });
 app.post("/facility/newImport", (req, res) => {
+  console.log("Importing Facility");
   const newFacility = new FacilityImport({
-    name: req.body.name,
-    street: req.body.street,
+    locationid: req.body.locationId,
+    company: req.body.company,
+    address: req.body.address,
     city: req.body.city,
     state: req.body.state,
     zip: req.body.zip,
-    locationId: req.body.locationId,
+    phone: req.body.phone,
     devices: req.body.devices,
+    testdue: req.body.testdue,
   });
   newFacility.save();
   res.json(newFacility);
@@ -134,9 +137,11 @@ app.delete("/device/delete/:id", async (req, res) => {
   const found = await Device.deleteOne({ _id: id });
   res.json(found);
 });
+
 //////////////////////////////////////////
 /// END DEVICE----------------------------
 //////////////////////////////////////////
+
 app.listen(3001, () => {
   console.log("Server started on port 3001");
 });

@@ -1,8 +1,9 @@
 import axios from "axios";
-import data from "../data.json";
-import { Device } from "../../server/models/device.model";
-import { FacilityImport } from "../../server/models/facilityImport.model";
+import { Device } from "../../server/models/device.model.js";
+import { FacilityImport } from "../../server/models/facilityImport.model.js";
 // const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
+import jsonData from "./data.json";
+
 const API_BASE = "http://localhost:3001";
 
 const preProcessData = (data) => {
@@ -38,6 +39,9 @@ const preProcessData = (data) => {
             break;
           case "sitemailing_phone":
             tempFacility.phone = data[i][key];
+            break;
+          case "sites_testdue":
+            tempFacility.testdue = data[i][key];
             break;
           default:
             break;
@@ -78,7 +82,6 @@ const hydrateDevices = (filteredArray, raw) => {
     for (let i = 0; i < res.length; i++) {
       for (const filteredKey in res[i]) {
         if (filteredKey == "locationid") {
-          console.log("hydrating devices!");
           // track current filtered facility in loops
           var filteredId = res[i][filteredKey];
           for (let j = 0; j < raw.length; j++) {
@@ -102,9 +105,7 @@ const hydrateDevices = (filteredArray, raw) => {
                         tempDevice.hazardcat = rawDeviceInfo;
                         break;
                       case "hazards_testdue":
-                        tempDevice.testdue = new Date(
-                          rawDeviceInfo
-                        ).toUTCString();
+                        tempDevice.testdue = rawDeviceInfo;
                         break;
                       case "hazards_lasttest":
                         tempDevice.lasttest = rawDeviceInfo;
@@ -148,7 +149,7 @@ const hydrateDevices = (filteredArray, raw) => {
 // zip: { type: String },
 // phone: { type: String },
 // devices: { type: [Device.schema], required: false },
-const convertData = async () => {
+export const convertData = async (data) => {
   console.log("converting data");
   console.log("pre-processing data...");
 
@@ -165,9 +166,42 @@ const convertData = async () => {
 
   const hydration = hydrateDevices(await filteredData, data);
   console.log("device hydration complete!");
-  console.log(await hydration);
+  await hydration.then((data) => {
+    data.forEach((element) => {
+      fetch(API_BASE + "/facility/newImport", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          locationid: element.locationid,
+          company: element.company,
+          address: element.address,
+          city: element.city,
+          state: element.state,
+          zip: element.zip,
+          phone: element.phone,
+          testdue: element.testdue,
+          devices: element.devices,
+        }),
+      })
+        .then((res) => {
+          res.json();
+          console.log(
+            `"Import Complete! Number of facities imported: ${data.length}"`
+          );
+        })
+        .catch((err) => console.error("Error: ", err));
+    });
+  });
 };
-convertData();
+////////////////////////////////////////
+// Hydrate database----------------------
+////////////////////////////////////////
+// convertData(jsonData);
+////////////////////////////////////////
+// END Hydrate database------------------
+////////////////////////////////////////
 // filteredCompanies.forEach((element) => {
 //   console.log(element);
 // });

@@ -12,7 +12,8 @@ const facilityImportSchema = new Schema({
   state: { type: String },
   zip: { type: String },
   phone: { type: String },
-  devices: { type: [Device.schema], required: false },
+  testdue: { type: Date },
+  devices: { type: [Device.schema] },
 });
 
 export const FacilityImport = mongoose.model(

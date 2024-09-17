@@ -24,12 +24,12 @@ const deviceSchema = new Schema({
   hazardcat: { type: String },
   testdue: { type: Date },
   lasttest: { type: Date },
-  manufacturer: { type: String, required: true },
-  _model: { type: String, required: true },
-  size: { type: String, required: true },
-  type: { type: String, required: true },
-  serialNumber: { type: String, required: true },
-  locationDescription: { type: String, required: true },
+  manufacturer: { type: String },
+  _model: { type: String },
+  size: { type: String },
+  type: { type: String },
+  serialNumber: { type: String },
+  locationDescription: { type: String },
   location: deviceGeoSchema,
 });
 

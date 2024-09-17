@@ -66,7 +66,8 @@ POST http://localhost:3001/facility/newImport
 Content-Type: application/json
 
 {  
-    "name": "test"
+    "name": "test",
+    "testdue": "12/15/2025"
  
    
 }
