@@ -149,7 +149,7 @@ const hydrateDevices = (filteredArray, raw) => {
 // zip: { type: String },
 // phone: { type: String },
 // devices: { type: [Device.schema], required: false },
-export const convertData = async (data) => {
+export default convertData = async (data) => {
   console.log("converting data");
   console.log("pre-processing data...");
 
