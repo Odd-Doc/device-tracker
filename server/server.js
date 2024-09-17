@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors());
 
 mongoose.connect(uri);
-
+var collection;
 //////////////////////////////////////////
 /// FACILITY----------------------------
 //////////////////////////////////////////
@@ -23,6 +23,33 @@ app.get("/facilities", async (req, res) => {
   const found = await FacilityImport.find()
     .select({ company: 1, address: 1, devices: 1, locationid: 1 })
     .lean();
+  res.json(found);
+});
+
+app.get("/facility/search", async (req, res) => {
+  const { query } = req.query; // Take search query from request
+
+  if (!query) {
+    return res.status(400).send({ error: "No search query provided" });
+  }
+
+  const found = await FacilityImport.aggregate([
+    {
+      $search: {
+        index: "facility", // The search index created in MongoDB
+        text: {
+          query: query,
+          path: {
+            //where to look
+            wildcard: "*",
+          },
+        },
+      },
+    },
+    {
+      $limit: 10, // Limit the results
+    },
+  ]);
   res.json(found);
 });
 app.get("/facility/:id", async (req, res) => {
