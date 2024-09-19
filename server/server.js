@@ -83,6 +83,7 @@ app.post("/facility/newImport", (req, res) => {
     devices: req.body.devices,
     testdue: req.body.testdue,
   });
+
   newFacility.save();
   res.json(newFacility);
 });

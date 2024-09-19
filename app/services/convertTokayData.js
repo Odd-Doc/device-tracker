@@ -170,29 +170,30 @@ export default convertData = async (data) => {
   console.log("filtering complete!");
   console.log("hydrating site devices from source...");
 
-  const hydration = hydrateDevices(await filteredData, data);
-  console.log("device hydration complete!");
-  await hydration.then((data) => {
-    data.forEach((element) => {
-      fetch(API_BASE + "/facility/newImport", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          locationid: element.locationid,
-          company: element.company,
-          address: element.address,
-          city: element.city,
-          state: element.state,
-          zip: element.zip,
-          phone: element.phone,
-          testdue: element.testdue,
-          devices: element.devices,
-        }),
-      }).catch((err) => console.error("Error: ", err));
-    });
-  });
+  const hydration = hydrateDevices(await filteredData, data)
+    .then((data) => {
+      data.forEach((element) => {
+        console.log(element.testdue);
+        fetch(API_BASE + "/facility/newImport", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            locationid: element.locationid,
+            company: element.company,
+            address: element.address,
+            city: element.city,
+            state: element.state,
+            zip: element.zip,
+            phone: element.phone,
+            testdue: element.testdue,
+            devices: element.devices,
+          }),
+        }).catch((err) => console.error("Error: ", err));
+      });
+    })
+    .then(console.log("device hydration complete"));
 };
 ////////////////////////////////////////
 // Hydrate database----------------------
