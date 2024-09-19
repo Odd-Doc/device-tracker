@@ -55,6 +55,7 @@ const preProcessData = (data) => {
   });
 };
 const filterOutUniqueSites = (preprocessedArray) => {
+  var progress = 0;
   return new Promise((resolve) => {
     var filteredCompanies = [];
 
@@ -69,7 +70,9 @@ const filterOutUniqueSites = (preprocessedArray) => {
         prevIndex.locationid != preprocessedArray[j].locationid
       ) {
         //push non-duplicates to new array -> confirmed this is accurate list of indexes
-        console.log("uniuqe site data found!");
+
+        progress += 1;
+        console.log(`uniuqe site data #${progress} found!`);
         filteredCompanies.push(preprocessedArray[j]);
       }
     }
@@ -77,6 +80,7 @@ const filterOutUniqueSites = (preprocessedArray) => {
   });
 };
 const hydrateDevices = (filteredArray, raw) => {
+  var progress = 0;
   return new Promise((resolve) => {
     const res = filteredArray;
     for (let i = 0; i < res.length; i++) {
@@ -129,6 +133,8 @@ const hydrateDevices = (filteredArray, raw) => {
                         break;
                     }
                   }
+                  progress += 1;
+                  console.log(`hydrating device #${progress}!`);
                   res[i].devices.push(tempDevice);
                 }
               }
@@ -166,33 +172,27 @@ export default convertData = async (data) => {
 
   const hydration = hydrateDevices(await filteredData, data);
   console.log("device hydration complete!");
-  await hydration
-    .then((data) => {
-      data.forEach((element) => {
-        fetch(API_BASE + "/facility/newImport", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            locationid: element.locationid,
-            company: element.company,
-            address: element.address,
-            city: element.city,
-            state: element.state,
-            zip: element.zip,
-            phone: element.phone,
-            testdue: element.testdue,
-            devices: element.devices,
-          }),
-        }).catch((err) => console.error("Error: ", err));
-      });
-    })
-    .then(
-      console.log(
-        `"Import Complete! Number of facities imported: ${data.length}"`
-      )
-    );
+  await hydration.then((data) => {
+    data.forEach((element) => {
+      fetch(API_BASE + "/facility/newImport", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          locationid: element.locationid,
+          company: element.company,
+          address: element.address,
+          city: element.city,
+          state: element.state,
+          zip: element.zip,
+          phone: element.phone,
+          testdue: element.testdue,
+          devices: element.devices,
+        }),
+      }).catch((err) => console.error("Error: ", err));
+    });
+  });
 };
 ////////////////////////////////////////
 // Hydrate database----------------------

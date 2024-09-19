@@ -20,36 +20,44 @@ import {
 import Fuse from "fuse.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import index from "../../index.web";
 // const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
 const API_BASE = "http://localhost:3001";
 
-export default function Search({ router }) {
+export default function Search() {
   const [searchText, setSearchText] = useState("");
-  const [searchResults, setSearchResults] = useState();
+  const [searchResults, setSearchResults] = useState([]);
   const [selectedFacility, setSelectedFacility] = useState();
-
+  const router = useRouter();
   useEffect(() => {
-    if (!searchText) {
-      setSearchResults([]);
+    if (searchText == "") {
+      setSearchResults("");
+    } else {
+      GetFacilities(searchText);
+
+      // console.log(`searchResults = ${searchResults}`);
     }
-
-    GetFacilities();
   }, [searchText]);
-  const GetFacilities = () => {
-    axios
-      .get(API_BASE + "/facilities")
-      .then((foundData) => {
-        var fuse = new Fuse(foundData.data, options);
-        const result = fuse.search(searchText);
 
-        setSearchResults(result);
+  const GetFacilities = async (input) => {
+    const res = await axios
+      .get(API_BASE + "/facility/search?query=" + input)
+      .then((foundData) => {
+        setSearchResults(foundData.data);
       })
       .catch((err) => console.error("Error: ", err));
   };
-  const handleChangeText = (text) => {};
+  const handleChangeText = (text) => {
+    // if (text != "") {
+    //   GetFacilities(text);
+    // } else {
+    //   setSearchText("");
+    // }
+    setSearchText(text);
+  };
   const handleFacilitySelect = (facility) => {
-    setSelectedFacility(JSON.stringify(facility));
+    setSelectedFacility();
   };
   return (
     <>
@@ -61,26 +69,33 @@ export default function Search({ router }) {
           onChangeText={(text) => handleChangeText(text)}
         />
         {/* check if search text is empty, if so, do not render Flatlist */}
-        {searchResults && searchText != "" && (
+        {searchResults.length > 0 && (
           <FlatList
             data={searchResults}
-            renderItem={({ item }) => (
-              <Link
-                push
-                href={{
-                  pathname: "/search/facility",
-                  params: {
-                    selection: JSON.stringify(item.item.company),
-                  },
+            renderItem={({ item, index }) => (
+              // <Link
+              //   push
+              //   href={{
+              //     pathname: "/search/facility",
+              //     params: {
+              //       selection: "hi",
+              //     },
+              //   }}
+              // >
+              <TouchableOpacity
+                onPressOut={() => {
+                  router.push({
+                    pathname: "/search/facility",
+                    params: {
+                      id: item._id,
+                    },
+                  });
                 }}
               >
-                <TouchableOpacity onPress={() => handleFacilitySelect(item)}>
-                  <Text>
-                    {item.item.address}
-                    {item.item.company}
-                  </Text>
-                </TouchableOpacity>
-              </Link>
+                <Text>{item.company}</Text>
+                <Text>{item.address}</Text>
+              </TouchableOpacity>
+              // </Link>
             )}
           />
         )}

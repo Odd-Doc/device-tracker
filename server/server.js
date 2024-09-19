@@ -29,32 +29,28 @@ app.get("/facilities", async (req, res) => {
 app.get("/facility/search", async (req, res) => {
   const { query } = req.query; // Take search query from request
 
-  if (!query) {
-    return res.status(400).send({ error: "No search query provided" });
-  }
-
   const found = await FacilityImport.aggregate([
     {
       $search: {
-        index: "facility", // The search index created in MongoDB
+        index: "facility",
         text: {
           query: query,
           path: {
-            //where to look
             wildcard: "*",
           },
         },
       },
     },
-    {
-      $limit: 10, // Limit the results
-    },
-  ]);
-  res.json(found);
+  ]).then((e) => {
+    res.json(e);
+  });
+  // .then((f) => console.log(f));
 });
 app.get("/facility/:id", async (req, res) => {
   var id = req.params.id;
+
   const found = await FacilityImport.findById(id).lean();
+  console.log(found);
   res.json(found);
 });
 app.get("/facilities", async (req, res) => {
@@ -76,7 +72,6 @@ app.post("/facility/new", (req, res) => {
   res.json(newFacility);
 });
 app.post("/facility/newImport", (req, res) => {
-  console.log("Importing Facility");
   const newFacility = new FacilityImport({
     locationid: req.body.locationId,
     company: req.body.company,
@@ -105,6 +100,13 @@ app.delete("/facility/delete/:id", async (req, res) => {
   var id = req.params.id;
   // const found = await Device.findById(id).lean();
   const found = await FacilityImport.deleteOne({ _id: id });
+  res.json(found);
+});
+//delete all
+app.delete("/facility/delete", async (req, res) => {
+  var id = req.params.id;
+  // const found = await Device.findById(id).lean();
+  const found = await FacilityImport.deleteMany();
   res.json(found);
 });
 // app.post("/facility/device/add", (req, res) => {
