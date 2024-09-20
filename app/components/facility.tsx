@@ -17,21 +17,45 @@ interface FacilityProps {
 }
 
 function Facility({ address, company, devices }: FacilityProps) {
-  const [name, setName] = useState<String>("");
-
+  const [status, setStatus] = useState();
   return (
     <>
       <View style={styles.infoContainer}>
-        <Text style={styles.text}>{company}</Text>
-        <Text style={styles.text}>{address}</Text>
+        <View style={styles.headerContainer}>
+          <Text style={styles.companyText}>{company}</Text>
+          <Text style={styles.addressText}>{address}</Text>
+          <View style={styles.statusContainer}>
+            <View style={styles.goodStatus}>
+              <Text
+                style={{
+                  fontFamily: "Roboto_400Regular",
+                  fontSize: 20,
+                }}
+              >
+                Current
+              </Text>
+            </View>
+            <View style={styles.badStatus}>
+              <Text
+                style={{
+                  fontFamily: "Roboto_400Regular",
+                  fontSize: 20,
+                }}
+              >
+                Device(s) Missing Passing Test
+              </Text>
+            </View>
+          </View>
+        </View>
       </View>
-      <TouchableOpacity
+
+      {/* <TouchableOpacity
         // style={[styles.viewDevicesButton, { transform: [{ translateY: -10 }] }]}
         style={styles.viewDevicesButton}
       >
         <Text style={styles.viewDevicesText}>View Devices</Text>
-      </TouchableOpacity>
-      <View style={styles.devicesContainer}>
+      </TouchableOpacity> */}
+      {/* <View style={styles.devicesContainer}>
         {devices.length > 0 && (
           <FlatList
             data={devices}
@@ -40,17 +64,39 @@ function Facility({ address, company, devices }: FacilityProps) {
             )}
           />
         )}
-      </View>
+      </View> */}
     </>
   );
 }
 const styles = StyleSheet.create({
   infoContainer: {
     flex: 1,
-    backgroundColor: "purple",
+    backgroundColor: "#555555",
+    // alignItems: "center",
   },
-  text: {
+  statusContainer: {},
+  goodStatus: {
+    backgroundColor: "#00c800",
+  },
+  badStatus: {
+    backgroundColor: "#d73f3f",
+  },
+  headerContainer: {
+    backgroundColor: "white",
+    paddingTop: 30,
+    paddingBottom: 30,
+  },
+  companyText: {
+    fontFamily: "Roboto_400Regular",
+    fontSize: 30,
     color: "black",
+    textAlign: "center",
+  },
+  addressText: {
+    fontFamily: "Roboto_300Light",
+    fontSize: 0,
+    color: "black",
+    textAlign: "center",
   },
   devicesContainer: {
     flex: 1,
