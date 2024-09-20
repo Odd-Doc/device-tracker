@@ -2,7 +2,9 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useRef, useState } from "react";
 import { RouteParams, Router, Stack, useLocalSearchParams } from "expo-router";
 import axios from "axios";
-const API_BASE = "http://localhost:3001";
+import Facility from "../../../components/facility";
+// const API_BASE = "http://localhost:3001";
+const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
 // interface FacilityProps {
 //   facilityName: String;
@@ -12,7 +14,7 @@ const API_BASE = "http://localhost:3001";
 //   zip?: Number;
 // }
 
-function Facility() {
+function FacilityScreen() {
   const [companyName, setCompanyName] = useState();
   const [companyAddress, setCompanyAddress] = useState("");
   const [companyZip, setCompanyZip] = useState("");
@@ -60,8 +62,9 @@ function Facility() {
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Facility" }} />
-      <View>
-        <Text>{companyName}</Text>
+
+      <View style={styles.container}>
+        {/* <Text>{companyName}</Text>
         <Text>{companyAddress}</Text>
         <Text>{companyCity}</Text>
         <Text>{companyState}</Text>
@@ -69,14 +72,22 @@ function Facility() {
         <Text>{companyTestDue}</Text>
         <Text>{companyDevices.length}</Text>
         {companyDevices.map((e, i) => {
-          console.log(e.serialNumber);
-        })}
+          <Text>{e.}</Text>
+        })} */}
+
+        <Facility
+          company={companyName}
+          address={companyAddress}
+          devices={companyDevices}
+        />
       </View>
     </>
   );
 }
 const styles = StyleSheet.create({
-  bg: {},
+  container: {
+    flex: 1,
+  },
 });
 
-export default Facility;
+export default FacilityScreen;

@@ -1,37 +1,84 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
-import { RouteParams, Router } from "expo-router";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
+import React, { useState } from "react";
+
 interface FacilityProps {
-  facilityName: String;
-  facilityStreet: String;
+  company: String;
+  address: String;
   city?: String;
   state?: String;
   zip?: Number;
+  devices: Array<string>;
 }
-// const FacilityProps = {
-//   name: String,
-//   street: String,
-//   city: String,
-//   state: String,
-//   zip: Number,
-// };
 
-function Facility({ facilityName, facilityStreet }: FacilityProps) {
+function Facility({ address, company, devices }: FacilityProps) {
   const [name, setName] = useState<String>("");
-  useEffect(() => {
-    setName(facilityName);
-  });
+
   return (
-    <View>
-      <Text style={styles.bg}>{name}</Text>
-      {/* <Text>{facilityStreet}</Text> */}
-    </View>
+    <>
+      <View style={styles.infoContainer}>
+        <Text style={styles.text}>{company}</Text>
+        <Text style={styles.text}>{address}</Text>
+      </View>
+      <TouchableOpacity
+        // style={[styles.viewDevicesButton, { transform: [{ translateY: -10 }] }]}
+        style={styles.viewDevicesButton}
+      >
+        <Text style={styles.viewDevicesText}>View Devices</Text>
+      </TouchableOpacity>
+      <View style={styles.devicesContainer}>
+        {devices.length > 0 && (
+          <FlatList
+            data={devices}
+            renderItem={({ item, index }) => (
+              <TouchableOpacity
+                style={styles.device}
+                // onPressOut={() => {
+                //   router.push({
+                //     pathname: "/search/facilityScreen",
+                //     params: {
+                //       id: item._id,
+                //     },
+                //   });
+                // }}
+              >
+                {/* <Text style={styles.deviceText}>{item.serialNumber}</Text>
+                <Text style={styles.deviceText}>{item.serialNumber}</Text> */}
+              </TouchableOpacity>
+            )}
+          />
+        )}
+      </View>
+    </>
   );
 }
 const styles = StyleSheet.create({
-  bg: {
-    backgroundColor: "red",
+  infoContainer: {
+    flex: 1,
+    backgroundColor: "purple",
   },
+  text: {
+    color: "black",
+  },
+  devicesContainer: {
+    flex: 1,
+    backgroundColor: "#555555",
+  },
+  viewDevicesButton: {
+    flex: 0.25,
+
+    backgroundColor: "#400080",
+  },
+  viewDevicesText: {
+    color: "white",
+  },
+  device: {},
+  deviceText: {},
 });
 
 export default Facility;

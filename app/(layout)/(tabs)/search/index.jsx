@@ -21,9 +21,9 @@ import Fuse from "fuse.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import index from "../../index.web";
-// const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
+const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
-const API_BASE = "http://localhost:3001";
+// const API_BASE = "http://localhost:3001";
 
 export default function Search() {
   const [searchText, setSearchText] = useState("");
@@ -62,43 +62,37 @@ export default function Search() {
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Search" }} />
-      <SafeAreaView>
-        <TextInput
-          style={styles.input}
-          value={searchText}
-          onChangeText={(text) => handleChangeText(text)}
-        />
-        {/* check if search text is empty, if so, do not render Flatlist */}
-        {searchResults.length > 0 && (
-          <FlatList
-            data={searchResults}
-            renderItem={({ item, index }) => (
-              // <Link
-              //   push
-              //   href={{
-              //     pathname: "/search/facility",
-              //     params: {
-              //       selection: "hi",
-              //     },
-              //   }}
-              // >
-              <TouchableOpacity
-                onPressOut={() => {
-                  router.push({
-                    pathname: "/search/facility",
-                    params: {
-                      id: item._id,
-                    },
-                  });
-                }}
-              >
-                <Text>{item.company}</Text>
-                <Text>{item.address}</Text>
-              </TouchableOpacity>
-              // </Link>
-            )}
+      <SafeAreaView style={{ backgroundColor: "#555555" }}>
+        <View>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter search value"
+            value={searchText}
+            onChangeText={(text) => handleChangeText(text)}
           />
-        )}
+          {/* check if search text is empty, if so, do not render Flatlist */}
+          {searchResults.length > 0 && (
+            <FlatList
+              data={searchResults}
+              renderItem={({ item, index }) => (
+                <TouchableOpacity
+                  style={styles.facility}
+                  onPressOut={() => {
+                    router.push({
+                      pathname: "/search/facilityScreen",
+                      params: {
+                        id: item._id,
+                      },
+                    });
+                  }}
+                >
+                  <Text style={styles.facilityText}>{item.company}</Text>
+                  <Text style={styles.facilityText}>{item.address}</Text>
+                </TouchableOpacity>
+              )}
+            />
+          )}
+        </View>
       </SafeAreaView>
     </>
   );
@@ -106,14 +100,28 @@ export default function Search() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#555555",
+    flex: 1,
   },
   input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
+    marginLeft: 20,
+    marginRight: 20,
+    padding: 12,
+    marginBottom: 12,
+    marginTop: 12,
+    backgroundColor: "white",
+  },
+  facility: {
+    backgroundColor: "#2662d2",
+    padding: 5,
+    flex: 1,
+    alignItems: "center",
+    margin: 6,
+  },
+  facilityText: {
+    fontSize: 15,
+    color: "white",
   },
 });
