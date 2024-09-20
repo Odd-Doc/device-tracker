@@ -44,13 +44,12 @@ app.get("/facility/search", async (req, res) => {
   ]).then((e) => {
     res.json(e);
   });
-  // .then((f) => console.log(f));
 });
 app.get("/facility/:id", async (req, res) => {
   var id = req.params.id;
 
   const found = await FacilityImport.findById(id).lean();
-  console.log(found);
+
   res.json(found);
 });
 app.get("/facilities", async (req, res) => {

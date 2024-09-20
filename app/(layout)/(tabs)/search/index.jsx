@@ -21,6 +21,7 @@ import Fuse from "fuse.js";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import index from "../../index.web";
+import FacilityListItem from "../../../components/facilityListItem";
 const API_BASE = process.env.EXPO_PUBLIC_NGROCK_URL;
 
 // const API_BASE = "http://localhost:3001";
@@ -62,8 +63,8 @@ export default function Search() {
   return (
     <>
       <Stack.Screen options={{ headerShown: true, title: "Search" }} />
-      <SafeAreaView style={{ backgroundColor: "#555555" }}>
-        <View>
+      <SafeAreaView>
+        <View style={styles.container}>
           <TextInput
             style={styles.input}
             placeholder="Enter search value"
@@ -74,9 +75,9 @@ export default function Search() {
           {searchResults.length > 0 && (
             <FlatList
               data={searchResults}
+              contentContainerStyle={{ gap: 10 }}
               renderItem={({ item, index }) => (
                 <TouchableOpacity
-                  style={styles.facility}
                   onPressOut={() => {
                     router.push({
                       pathname: "/search/facilityScreen",
@@ -86,8 +87,10 @@ export default function Search() {
                     });
                   }}
                 >
-                  <Text style={styles.facilityText}>{item.company}</Text>
-                  <Text style={styles.facilityText}>{item.address}</Text>
+                  <FacilityListItem
+                    company={item.company}
+                    address={item.address}
+                  />
                 </TouchableOpacity>
               )}
             />
@@ -100,10 +103,8 @@ export default function Search() {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
-    justifyContent: "center",
     backgroundColor: "#555555",
-    flex: 1,
+    height: "100%",
   },
   input: {
     marginLeft: 20,
@@ -114,11 +115,11 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   facility: {
-    backgroundColor: "#2662d2",
-    padding: 5,
-    flex: 1,
-    alignItems: "center",
-    margin: 6,
+    // backgroundColor: "#2662d2",
+    // padding: 5,
+    // flex: 1,
+    // alignItems: "center",
+    // margin: 6,
   },
   facilityText: {
     fontSize: 15,

@@ -36,20 +36,7 @@ function Facility({ address, company, devices }: FacilityProps) {
           <FlatList
             data={devices}
             renderItem={({ item, index }) => (
-              <TouchableOpacity
-                style={styles.device}
-                // onPressOut={() => {
-                //   router.push({
-                //     pathname: "/search/facilityScreen",
-                //     params: {
-                //       id: item._id,
-                //     },
-                //   });
-                // }}
-              >
-                {/* <Text style={styles.deviceText}>{item.serialNumber}</Text>
-                <Text style={styles.deviceText}>{item.serialNumber}</Text> */}
-              </TouchableOpacity>
+              <TouchableOpacity style={styles.device}></TouchableOpacity>
             )}
           />
         )}
